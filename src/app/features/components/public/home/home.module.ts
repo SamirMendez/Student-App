@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { MetricService } from 'src/app/core/services/metrics/metric.service';
 
 
 @NgModule({
@@ -12,6 +13,9 @@ import { HomeComponent } from './home.component';
   imports: [
     CommonModule,
     HomeRoutingModule
+  ],
+  providers: [
+    MetricService
   ]
 })
 export class HomeModule { }

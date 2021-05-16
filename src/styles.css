@@ -12,3 +12,6 @@
 .darkText{
     color: #292927 !important;
 }
+.pointerCursor{
+    cursor: pointer !important;
+}

@@ -11,7 +11,9 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirePerformanceModule } from '@angular/fire/performance';
 import { environment } from 'src/environments/environment';
+import { MetricService } from './core/services/metrics/metric.service';
 
 @NgModule({
   declarations: [
@@ -23,14 +25,16 @@ import { environment } from 'src/environments/environment';
     CoreModule,
     SharedModule,
     FeaturesModule,
-    AngularFireModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireAnalyticsModule,
     AngularFireDatabaseModule,
+    AngularFirePerformanceModule,
   ],
-  providers: [],
+  providers: [
+    MetricService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
