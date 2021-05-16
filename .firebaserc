@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "students-platform-e5021": {
+      "hosting": {
+        "Student-App": [
+          "students-platform-e5021"
+        ]
+      }
+    }
+  }
+}

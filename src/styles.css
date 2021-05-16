@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Product Sans';
+    src: url('./assets/fonts/ProductSans-Regular.ttf');
+}
+*{
+    font-family: 'Product Sans', sans-serif;
+}
+.darkBackground{
+    background-color: #292927 !important;
+}
+.darkText{
+    color: #292927 !important;
+}
