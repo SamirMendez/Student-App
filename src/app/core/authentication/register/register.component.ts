@@ -1,17 +1,18 @@
-import { RegisterData, RegisterResponse } from '@models/authModels';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { RegisterData, AuthResponse } from '@models/authModels';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AuthenticationService } from '@services/authentication/authentication.service';
 import { ModalData } from '@models/UIModels';
+import { MetricService } from '@services/metrics/metric.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   // Variable para el formulario de registro
   registerForm: FormGroup;
@@ -36,9 +37,14 @@ export class RegisterComponent implements OnInit {
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private modalService: BsModalService,
-              private authService: AuthenticationService) { }
+              private authService: AuthenticationService,
+              private metricService: MetricService) { }
 
   ngOnInit(): void {
+    // Registrando eventos
+    this.metricService.registerEvent('registerLoaded');
+    this.metricService.performingTrace('registerScreen');
+    // Registrando evento eventos
     // Inicializando formulario
     this.registerForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
@@ -60,7 +66,7 @@ export class RegisterComponent implements OnInit {
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
     };
-    this.authService.createUser(registerData).then((registerResponse: RegisterResponse) => {
+    this.authService.createUser(registerData).then((registerResponse: AuthResponse) => {
       if (registerResponse.status === true) {
         this.registerSuccess = true;
         const modalInfo: ModalData = {
@@ -111,11 +117,11 @@ export class RegisterComponent implements OnInit {
   }
   // Funcion para crear un usuario
   // Funcion para desplegar el modal
-  showModal(registerModal, modalData: ModalData): void {
+  showModal(modalToShow, modalData: ModalData): void {
     this.modalData.modalIcon = modalData.icon;
     this.modalData.modalTitle = modalData.title;
     this.modalData.modalDescription = modalData.message;
-    this.modalReference = this.modalService.show(registerModal);
+    this.modalReference = this.modalService.show(modalToShow);
   }
   // Funcion para desplegar el modal
   // Funcion para continuar al panel
@@ -128,4 +134,9 @@ export class RegisterComponent implements OnInit {
     }
   }
   // Funcion para continuar al panel
+  ngOnDestroy(): void {
+    // Registrando eventos
+    this.metricService.closeTrace();
+    // Registrando evento eventos
+  }
 }
