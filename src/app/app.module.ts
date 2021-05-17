@@ -14,6 +14,9 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirePerformanceModule } from '@angular/fire/performance';
 import { environment } from 'src/environments/environment';
 import { MetricService } from './core/services/metrics/metric.service';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import { MetricService } from './core/services/metrics/metric.service';
     AngularFireAnalyticsModule,
     AngularFireDatabaseModule,
     AngularFirePerformanceModule,
+    ModalModule.forRoot(),
+    HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     MetricService

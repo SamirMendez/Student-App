@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
 import { AngularFirePerformance } from '@angular/fire/performance';
+import { TraceAttribute } from '@models/metricModels';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MetricService {
-
+  // Variable para el monitoreo del performance
+  appTracing: firebase.default.performance.Trace;
+  // Variable para el monitoreo del performance
   constructor(private appAnalytics: AngularFireAnalytics, private appPerformance: AngularFirePerformance) { }
 
   // Registros de Google Analytics
@@ -17,12 +20,15 @@ export class MetricService {
   // ============================================================================================================================== //
   // Registros de Performance
   public async performingTrace(traceName: string): Promise<any> {
-    const appTracing = await this.appPerformance.trace(traceName);
-    appTracing.start();
+    this.appTracing = await this.appPerformance.trace(traceName);
+    this.appTracing.start();
   }
-  public async closeTrace(traceName: string): Promise<any> {
-    const appTracing = await this.appPerformance.trace(traceName);
-    appTracing.stop();
+  public async closeTrace(): Promise<any> {
+    this.appTracing.stop();
+  }
+  public async setTraceAttribute(traceData: TraceAttribute): Promise<any> {
+    const convertedData = JSON.stringify(traceData.eventData);
+    this.appTracing.putAttribute(traceData.attributeName, `${traceData.eventData}`);
   }
   // Registros de Performance
 }

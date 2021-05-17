@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Registrando eventos
-    this.metricService.closeTrace('homeScreen');
+    this.metricService.closeTrace();
     // Registrando evento eventos
   }
 }
