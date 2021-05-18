@@ -9,7 +9,11 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'students'},
-      { path: 'students', loadChildren: () => import('../students/students.module').then(m => m.StudentsModule), canActivate: [AuthenticationGuard] }
+      {
+        path: 'students',
+        loadChildren: () => import('../students/students.module').then(m => m.StudentsModule),
+        canActivate: [AuthenticationGuard]
+      }
     ]
   }
 ];

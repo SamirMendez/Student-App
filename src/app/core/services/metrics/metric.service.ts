@@ -23,7 +23,7 @@ export class MetricService {
     this.appTracing = await this.appPerformance.trace(traceName);
     this.appTracing.start();
   }
-  public async closeTrace(): Promise<any> {
+  public closeTrace(): void {
     this.appTracing.stop();
   }
   public async setTraceAttribute(traceData: TraceAttribute): Promise<any> {

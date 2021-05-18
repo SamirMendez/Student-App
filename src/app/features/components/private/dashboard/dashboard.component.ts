@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private router: Router,
               private modalService: BsModalService,
-              private authService: AuthenticationService,) { }
+              private authService: AuthenticationService) { }
 
   ngOnInit(): void {
   }

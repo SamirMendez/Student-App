@@ -19,9 +19,9 @@ export class AuthenticationService {
               private metricService: MetricService) {
                 this.checkAuthState();
               }
-  
+
   // Metodo publico para verificar el estado de autenticacion
-  public checkAuthState() {
+  public checkAuthState(): void {
     this.userAuth.authState.subscribe((userData: any) => {
       this.authState = userData;
     });
