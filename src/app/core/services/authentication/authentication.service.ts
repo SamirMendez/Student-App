@@ -5,16 +5,31 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { MetricService } from '@services/metrics/metric.service';
 import { RegisterData, AuthResponse, LoginData } from '@models/authModels';
 import * as firebase from 'firebase';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  // Variable para monitorear el estado de autenticacion
+  authState: Observable<firebase.default.User> = null;
+  // Variable para monitorear el estado de autenticacion
   constructor(private userAuth: AngularFireAuth,
               private realtimeDatabase: AngularFireDatabase,
-              private metricService: MetricService) { }
-
+              private metricService: MetricService) {
+                this.checkAuthState();
+              }
+  
+  // Metodo publico para verificar el estado de autenticacion
+  public checkAuthState() {
+    this.userAuth.authState.subscribe((userData: any) => {
+      this.authState = userData;
+    });
+  }
+  get isAuthenticated(): boolean {
+    return this.authState != null;
+  }
+  // Metodo publico para verificar el estado de autenticacion
   // Metodo publico para crear un usuario en Firebase
   public async createUser(registerData: RegisterData): Promise<AuthResponse> {
     this.metricService.registerEvent('createUser');
@@ -90,4 +105,11 @@ export class AuthenticationService {
     });
   }
   // Funcion para recuperar las cuentas del usuario
+  // Funcion para cerrar la sesion del usuario
+  public async logOut(): Promise<any> {
+    return await this.userAuth.signOut().then(() => {
+      return true;
+    });
+  }
+  // Funcion para cerrar la sesion del usuario
 }

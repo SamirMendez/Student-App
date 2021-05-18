@@ -5,6 +5,7 @@
     "baseUrl": "./",
     "paths": {
       "@services/*": ["src/app/core/services/*"],
+      "@guards/*": ["src/app/core/guards/*"],
       "@models/*": ["src/app/core/models/*"],
     },
     "outDir": "./dist/out-tsc",

@@ -27,7 +27,6 @@ export class MetricService {
     this.appTracing.stop();
   }
   public async setTraceAttribute(traceData: TraceAttribute): Promise<any> {
-    const convertedData = JSON.stringify(traceData.eventData);
     this.appTracing.putAttribute(traceData.attributeName, `${traceData.eventData}`);
   }
   // Registros de Performance
