@@ -40,9 +40,11 @@ export class StudentService {
     const studentCode: number = studentData.id;
     return await this.realtimeDatabase.database.ref(`studentsPlatform/students/${studentCode}/`).update({
       name: studentData.name,
-      surname: studentData.surname,
+      lastname: studentData.surname,
       age: studentData.age,
     }).then((createdData: string) => {
+      console.log('Corrio');
+      
       return {status: true, data: createdData};
     });
   }
@@ -59,7 +61,7 @@ export class StudentService {
   // Metodo publico para eliminar un estudiante
   // Funcion para enviar un archivo al servidor
   public async sendFile(file: FormData): Promise<any> {
-    const endpointURL = `https://us-central1-students-platform-e5021.cloudfunctions.net/readFilengb`;
+    const endpointURL = `https://us-central1-students-platform-e5021.cloudfunctions.net/readFile`;
     return await this.httpClient.post(endpointURL, file).toPromise().then((returnedStudents) => {
       return returnedStudents;
     });

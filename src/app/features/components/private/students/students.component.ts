@@ -155,6 +155,8 @@ export class StudentsComponent implements OnInit {
       age: this.editionForm.value.age,
       id: student.id
     };
+    console.log(studentData);
+    
     this.studentService.updateStudent(studentData).then((studenResponse: StudentResponse) => {
       this.modalReference.hide();
       this.editionForm.reset();
