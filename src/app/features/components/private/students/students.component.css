@@ -1,23 +1,26 @@
-.tableContainer{
-    margin: 0px;
-    padding: 0px;
+table {
     width: 100%;
-    max-height: 50vh;
-    margin-bottom: 2vh;
-    overflow: hidden;
-    overflow-y: auto;
+    border-collapse: collapse;
+} 
+th, td {
+    padding: 8px;
 }
-.tableContainer2{
-    margin: 0px;
-    padding: 0px;
+th{
+    text-align: left;
+    background: #eee;
+    position: sticky;
+    top: 0px;
+} 
+.tableContainer {
+    border: 1px solid #ddd;
     width: 100%;
+    overflow-y: auto;
     max-height: 50vh;
     margin-bottom: 2vh;
-    overflow: hidden;
-    overflow-y: auto;
 }
 ::-webkit-scrollbar {
     width: 3px;
+    height: 3px;
 }
 /* Track */
 ::-webkit-scrollbar-track {
@@ -38,4 +41,16 @@
 }
 .deleteButton{
     width: 100%;
+}
+.customPosition{
+    position: initial !important;
+}
+.buttonDisabled{
+    opacity: 5;
+    pointer-events: initial;
+}
+.buttonEnabled{
+    /* opacity: 0.5; */
+    pointer-events: none;
+    background-color: #7e7e7e !important;
 }
