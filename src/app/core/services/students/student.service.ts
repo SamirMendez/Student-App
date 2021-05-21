@@ -52,11 +52,18 @@ export class StudentService {
   // Metodo publico para eliminar un estudiante
   public async deleteStudent(studentData: StudentDelete): Promise<StudentResponse> {
     const studentCode = studentData.code;
-    return await this.fireStorage.storage.refFromURL(studentData.file).delete().then(async () => {
+    const bioFile = studentData.file;
+    if (bioFile != null || bioFile != undefined) {
+      return await this.fireStorage.storage.refFromURL(studentData.file).delete().then(async () => {
+        return await this.realtimeDatabase.database.ref(`studentsPlatform/students/${studentCode}/`).remove().then((deletedData: string) => {
+          return {status: true, data: deletedData};
+        });
+      });
+    } else {
       return await this.realtimeDatabase.database.ref(`studentsPlatform/students/${studentCode}/`).remove().then((deletedData: string) => {
         return {status: true, data: deletedData};
       });
-    });
+    }
   }
   // Metodo publico para eliminar un estudiante
   // Funcion para enviar un archivo al servidor
