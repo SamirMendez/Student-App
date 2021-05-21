@@ -1,6 +1,6 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3">
     <h5 class="my-0 mr-md-auto font-weight-normal text-dark">Students App</h5>
-    <a class="btn bg-dark text-white" (click)="goToLogin()">Iniciar sesión</a>
+    <a class="btn darkBackground text-white" (click)="goToLogin()">Iniciar sesión</a>
 </div>
 <div class="container-fluid">
     <div class="row justify-content-center">
@@ -22,8 +22,10 @@
                     <label for="exampleInputPassword1" class="text-dark">Password</label>
                     <input type="password" class="form-control customInput" id="exampleInputPassword1" placeholder="••••••••••••••••••••" formControlName="password">
                 </div>
+                <small class="form-text text-danger" *ngIf="registerForm.controls.password.invalid && registerForm.controls.password.touched" >La contraseña debe tener letras, números y al menos 6 caracteres.</small>
+                <small class="form-text text-success" *ngIf="registerForm.controls.password.valid" >Contraseña correcta</small>
             </form>
-            <button class="btn text-center text-white bg-dark mt-5 mb-5 btn-lg btn-block" [disabled]="registerForm.invalid" (click)="createUser()">Registrarme</button>
+            <button class="btn text-center text-white darkBackground mt-5 mb-5 btn-lg btn-block" [disabled]="registerForm.invalid" (click)="createUser()">Registrarme</button>
         </div>
     </div>
 </div>
@@ -37,7 +39,7 @@
         <img class="modalIlustration mt-5" src="{{modalData?.modalIcon}}" alt="Logo">
         <h2 class="text-center text-dark mt-4">{{modalData?.modalTitle}}</h2>
         <p class="text-center mt-3">{{modalData?.modalDescription}}</p>        
-        <button class="btn btn-block btn-lg bg-dark text-center  text-white mt-2 mb-2" (click)="goToPanel()">Aceptar</button>
+        <button class="btn btn-block btn-lg darkBackground text-center  text-white mt-2 mb-2" (click)="goToPanel()">Aceptar</button>
     </div>
 </ng-template>
 <!-- Modals -->

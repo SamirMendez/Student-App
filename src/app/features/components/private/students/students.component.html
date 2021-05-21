@@ -1,1 +1,210 @@
-<p>students works!</p>
+<h1 class="m-0 p-0 mt-4 ml-4">Estudiantes</h1>
+<p class="m-0 p-0 mt-1 ml-4">Listado de estudiantes para el año escolar 2021/2022</p>
+<form class="mt-3 mb-3" [formGroup]="searchForm">
+    <div class="row justify-content-center">
+        <div class="col-11 col-sm-11 col-md-6 col-lg-6 col-xl-7">
+            <div class="form-group">
+                <input type="text" class="form-control customInput" id="formGroupExampleInput" placeholder="Buscar en la lista de estudiantes disponibles" formControlName="name">
+            </div>
+        </div>
+        <div class="col-8 col-sm-11 col-md-4 col-lg-4 col-xl-4">
+            <div class="form-group">
+                <select class="form-control customInput" id="exampleFormControlSelect1" formControlName="field">
+                  <option value="" disabled selected>Escoja un parámetro de búsqueda</option>
+                  <option value="name">Nombre</option>
+                  <option value="lastname">Apellido</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-3 col-sm-11 col-md-2 col-lg-2 col-xl-1">
+            <button class="btn bg-danger btn-block text-white" (click)="clearSearch()">
+                <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" style="color: #ffffff;" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <small class="form-text text-danger" *ngIf="(searchForm.controls.field.invalid && searchForm.controls.field.touched) || (searchForm.controls.name.touched && searchForm.value.field == '')">Debes escoger al menos un parámetro de búsqueda</small>
+    <!-- <small class="form-text text-danger" *ngIf="searchForm.controls.name.invalid || searchForm.value.name == ''">Introduce algo en el campo de </small> -->
+    <small class="form-text text-success" *ngIf="searchForm.controls.name.valid && searchForm.controls.field.valid && searchForm.value.name !== ''">Resutlados de la búsqueda de {{searchForm.value.name}}</small>
+</form>
+<div class="tableContainer">
+    <table class="table mt-4">
+        <thead>
+            <tr>
+              <th scope="col" class="customTable">#</th>
+              <th scope="col" class="customTable text-center" [style.width]="17 + '%'" title="">Nombre</th>
+              <th scope="col" class="customTable text-center" [style.width]="17 + '%'" title="">Apellido</th>
+              <th scope="col" class="customTable text-center" [style.width]="17 + '%'" title="">Edad</th>
+              <th scope="col" class="customTable text-center" [style.width]="17 + '%'" title="">Inscripción</th>
+              <th scope="col" class="customTable text-center" [style.width]="70 + '%'" title="">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let student of students; let studentPosition = index">
+                <th scope="row" class="customTable text-center">{{studentPosition + 1}}</th>
+                <th scope="row" class="customTable text-center"><p>{{student?.name}}</p></th>
+                <th scope="row" class="customTable text-center"><p>{{student?.lastname}}</p></th>
+                <th scope="row" class="customTable text-center"><p>{{student?.age}}</p></th>
+                <th scope="row" class="customTable text-center"><p>{{student?.createdBy | student}}</p></th>
+                <th scope="row" class="customTable">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-sm-3 col-md-2 col-lg-2 col-xl-2 mt-1">
+                            <button class="btn optionButton darkBackground text-white" (click)="showEditionForm(editionModal, student)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                </svg>
+                            </button>
+                            <ng-template #editionModal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title pull-left"></h4>
+                                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalReference.hide()"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img class="modalIlustration mt-5" src="../../../../../assets/img/undraw_text_files_au1q.svg" alt="Logo">
+                                    <h2 class="text-center text-dark mt-4">Editar estudiante {{student?.name}}</h2>
+                                    <p class="text-center mt-3">Complete los campos del formulario para actualizar un nuevo estudiante</p>
+                                    <form [formGroup]="editionForm">
+                                        <div class="form-group mt-3">
+                                            <label for="exampleInputEmail1" class="text-dark">Nombre</label>
+                                            <input type="text" class="form-control customInput" id="exampleInputEmail1" placeholder="Joselin" formControlName="name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1" class="text-dark">Apellido</label>
+                                            <input type="text" class="form-control customInput" id="exampleInputEmail1" placeholder="Ramírez" formControlName="surname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1" class="text-dark">Edad</label>
+                                            <input type="number" class="form-control customInput" id="exampleInputEmail1" placeholder="20" formControlName="age">
+                                        </div>
+                                    </form>
+                                    <button class="btn btn-block btn-lg darkBackground text-center text-white mt-2 mb-2" [disabled]="editionForm.invalid" (click)="updateStudent(student)">Actualizar</button>
+                                </div>
+                            </ng-template>
+                        </div>
+                        <div class="col-12 col-sm-3 col-md-2 col-lg-2 col-xl-2 mt-1">
+                            <button class="btn optionButton darkBackground text-white" [disabled]="student.createdBy !== 'form'" (click)="downloadBio(student.file)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-download" viewBox="0 0 16 16">
+                                    <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+                                    <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="col-12 col-sm-3 col-md-2 col-lg-2 col-xl-2 mt-1">
+                            <button class="btn optionButton bg-danger text-white" (click)="showDeleteModal(deleteModal, student)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                </svg>
+                            </button>  
+                            <ng-template #deleteModal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title pull-left"></h4>
+                                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalReference.hide()"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img class="modalIlustration mt-5" src="../../../../../assets/img/undraw_Throw_away_re_x60k.svg" alt="Delete" title="Delete">
+                                    <h2 class="text-center text-dark mt-4">Eliminar estudiante</h2>
+                                    <p class="text-center mt-3">Al presionar eliminar estudiante, usted estará eliminando del sistema al estudiante {{student?.name}} {{student?.surname}}</p>
+                                    <button class="btn btn-block btn-lg bg-dark text-center text-white mt-2 mb-2" (click)="deleteStudent(student)">Eliminar estudiante</button>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<button class="btn darkBackground text-white mt-2 mr-2" (click)="showStudentForm()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus mr-3" viewBox="0 0 16 16">
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+    </svg>
+    Agregar estudiante
+</button>
+<button class="btn darkBackground text-white mt-2 ml-xl-2 ml-lg-2 ml-md-2 ml-sm-2" (click)="showFileForm()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark mr-3" viewBox="0 0 16 16">
+        <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+      </svg>
+    Agregar archivo de inscripción
+</button>
+<ng-template #studentModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left"></h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalReference.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+        <img class="modalIlustration mt-5" src="../../../../../assets/img/undraw_text_files_au1q.svg" alt="Logo">
+        <h2 class="text-center text-dark mt-4">Agregar estudiante</h2>
+        <p class="text-center mt-3">Complete los campos del formulario para agregar un nuevo estudiante</p>
+        <form [formGroup]="studentsForm">
+            <div class="form-group mt-3">
+                <label for="exampleInputEmail1" class="text-dark">Nombre</label>
+                <input type="text" class="form-control customInput" id="exampleInputEmail1" placeholder="Joselin" formControlName="name">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="text-dark">Apellido</label>
+                <input type="text" class="form-control customInput" id="exampleInputEmail1" placeholder="Ramírez" formControlName="surname">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="text-dark">Edad</label>
+                <input type="number" class="form-control customInput" id="exampleInputEmail1" placeholder="20" formControlName="age">
+            </div>
+            <div class="input-group mb-2">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" (change)="uploadBioFile($event)" accept=".txt, .pdf, .docx">
+                    <label class="custom-file-label" for="inputGroupFile01">Biografía del estudiante</label>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" [style.width]="(uploadStandPercent | async) + '%'"></div>
+            </div>
+            <small id="emailHelp" class="form-text text-muted">Escoja un archivo Word, TXT o PDF</small>
+        </form>
+        <button class="btn btn-block btn-lg darkBackground text-center text-white mt-2 mb-2" [disabled]="studentsForm.invalid" (click)="createStudent()">Crear estudiante</button>
+    </div>
+</ng-template>
+<ng-template #fileModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left"></h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalReference.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+        <h2 class="text-dark mt-3">Agregar estudiantes</h2>
+        <p class="mt-1">Inserte un archivo para realizar una inscripción masiva.</p>
+        <div class="tableContainer2" *ngIf="filesForm.invalid != true" >
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                      <th scope="col" class="customTable">#</th>
+                      <th scope="col" class="customTable text-center" [style.width]="25 + '%'" title="">Nombre</th>
+                      <th scope="col" class="customTable text-center" [style.width]="25 + '%'" title="">Apellido</th>
+                      <th scope="col" class="customTable text-center" [style.width]="25 + '%'" title="">Edad</th>
+                      <th scope="col" class="customTable text-center" [style.width]="25 + '%'" title="">Inscripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let student of fileStudents; let studentPosition = index">
+                        <th scope="row" class="customTable text-center">{{studentPosition + 1}}</th>
+                        <th scope="row" class="customTable text-center"><p>{{student?.name}}</p></th>
+                        <th scope="row" class="customTable text-center"><p>{{student?.lastname}}</p></th>
+                        <th scope="row" class="customTable text-center"><p>{{student?.age}}</p></th>
+                        <th scope="row" class="customTable text-center"><p>{{student?.createdBy | student}}</p></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <form [formGroup]="filesForm">
+            <div class="input-group mb-2">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" (change)="uploadXMLFile($event)" accept=".xml">
+                    <label class="custom-file-label" for="inputGroupFile01">Archivo XML con el listado de estudiantes</label>
+                </div>
+            </div>
+            <small id="emailHelp" class="form-text text-muted">Escoja un archivo XML</small>
+        </form>
+        <button class="btn btn-block btn-lg darkBackground text-center text-white mt-2 mb-2" [disabled]="filesForm.invalid" (click)="createByFile()">Agregar estudiantes</button>
+    </div>
+</ng-template>

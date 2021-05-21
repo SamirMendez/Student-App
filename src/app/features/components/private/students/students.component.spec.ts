@@ -1,4 +1,11 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AngularFireModule } from '@angular/fire';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StudentService } from '@services/students/student.service';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 import { StudentsComponent } from './students.component';
 
@@ -8,7 +15,17 @@ describe('StudentsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StudentsComponent ]
+      imports: [
+        RouterTestingModule,
+        ModalModule.forRoot(),
+        HttpClientModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        SharedModule
+      ],
+      declarations: [ StudentsComponent ],
+      providers: [
+        StudentService
+      ]
     })
     .compileComponents();
   });

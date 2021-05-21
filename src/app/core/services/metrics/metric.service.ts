@@ -10,7 +10,8 @@ export class MetricService {
   // Variable para el monitoreo del performance
   appTracing: firebase.default.performance.Trace;
   // Variable para el monitoreo del performance
-  constructor(private appAnalytics: AngularFireAnalytics, private appPerformance: AngularFirePerformance) { }
+  constructor(private appAnalytics: AngularFireAnalytics,
+              private appPerformance: AngularFirePerformance) { }
 
   // Registros de Google Analytics
   public registerEvent(eventName: string): void {
@@ -21,13 +22,13 @@ export class MetricService {
   // Registros de Performance
   public async performingTrace(traceName: string): Promise<any> {
     this.appTracing = await this.appPerformance.trace(traceName);
-    this.appTracing.start();
+    return this.appTracing.start();
   }
-  public closeTrace(): void {
-    this.appTracing.stop();
+  public async closeTrace(): Promise<any> {
+    return this.appTracing.stop();
   }
   public async setTraceAttribute(traceData: TraceAttribute): Promise<any> {
-    this.appTracing.putAttribute(traceData.attributeName, `${traceData.eventData}`);
+    return this.appTracing.putAttribute(traceData.attributeName, `${traceData.eventData}`);
   }
   // Registros de Performance
 }

@@ -6,7 +6,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class StudentPipe implements PipeTransform {
 
   transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+    if (value === 'form') {
+      return 'Por formulario';
+    } else {
+      return 'Por archivo';
+    }
   }
 
 }

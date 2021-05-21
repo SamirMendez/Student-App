@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
   // Funcion para cerrar la sesion del usuario
   logOut(): void {
     this.authService.logOut().then((returnedData) => {
-      const modalInfo = {
+      const modalInfo: ModalData = {
         icon: '../../../../../assets/img/undraw_Travel_mode_re_2lxo.svg',
         title: 'Cerrar sesión',
         message: 'Fue bueno tenerte por aquí, sin embargo esperamos que vuelvas pronto.',

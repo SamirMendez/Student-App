@@ -1,6 +1,6 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3">
     <h5 class="my-0 mr-md-auto font-weight-normal text-dark">Students App</h5>
-    <a class="btn bg-dark text-white" (click)="goToRegister()">Registrarme</a>
+    <a class="btn darkBackground text-white" (click)="goToRegister()">Registrarme</a>
 </div>
 <div class="container-fluid">
     <div class="row justify-content-center">
@@ -20,7 +20,7 @@
                 </div>
             </form>
             <h5 class="text-center mt-4 text-dark pointerCursor" (click)="openPasswordModal()">¿Olvidaste tu contraseña?</h5>
-            <button class="btn text-center text-white bg-dark mt-5 mb-5 btn-lg btn-block" [disabled]="loginForm.invalid" (click)="createUser()">Iniciar sesión</button>
+            <button class="btn text-center text-white darkBackground mt-5 mb-5 btn-lg btn-block" [disabled]="loginForm.invalid" (click)="createUser()">Iniciar sesión</button>
         </div>
     </div>
 </div>
@@ -34,7 +34,7 @@
         <img class="modalIlustration mt-5" src="{{modalData?.modalIcon}}" alt="Logo">
         <h2 class="text-center text-dark mt-4">{{modalData?.modalTitle}}</h2>
         <p class="text-center mt-3">{{modalData?.modalDescription}}</p>        
-        <button class="btn btn-block btn-lg bg-dark text-center  text-white mt-2 mb-2" (click)="goToPanel()">Aceptar</button>
+        <button class="btn btn-block btn-lg darkBackground text-center  text-white mt-2 mb-2" (click)="goToPanel()">Aceptar</button>
     </div>
 </ng-template>
 <ng-template #passwordModal>
@@ -53,7 +53,7 @@
                 <small id="emailHelp" class="form-text text-muted">Nunca mostraremos tu dirección de correo a nadie mas.</small>
             </div>
         </form>        
-        <button class="btn btn-block btn-lg bg-dark text-center text-white mt-2 mb-2" (click)="recoverPassword()" [disabled]="passwordForm.invalid">Enviar enlace</button>
+        <button class="btn btn-block btn-lg darkBackground text-center text-white mt-2 mb-2" (click)="recoverPassword()" [disabled]="passwordForm.invalid">Enviar enlace</button>
     </div>
 </ng-template>
 <!-- Modals -->

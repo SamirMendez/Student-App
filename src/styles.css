@@ -4,7 +4,7 @@
     src: url('./assets/fonts/ProductSans-Regular.ttf');
 }
 *{
-    font-family: 'Product Sans', sans-serif;
+    font-family: 'Product Sans', sans-serif !important;
 }
 .darkBackground{
     background-color: #292927 !important;
